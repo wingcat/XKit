@@ -85,7 +85,7 @@ XKit.extensions.xkit_preferences = new Object({
 		this.running = true;
 
 		// Only load if header is somewhere to be found.
-		if ($(".l-header").length == 0) { return; }
+		if (!$(".l-header").length) { return; }
 
 		XKit.tools.init_css("xkit_preferences");
 		// $("#help_button, .tab_help").css("display","none");
@@ -206,7 +206,7 @@ XKit.extensions.xkit_preferences = new Object({
 		XKit.extensions.xkit_preferences.spring_cleaning();
 
 		var shown_safari = XKit.storage.get("xkit_preferences","shown_safari","0");
-		if (shown_safari == "0" && XKit.browser().safari == true) {
+		if (shown_safari == "0" && XKit.browser().safari) {
 			XKit.notifications.add("<b>Safari no longer supported.</b><br/>Unfortunately, I've been forced to discontinue all Safari support for XKit. Please click here to learn more, and dismiss this message.", "warning", true, function() {
 
 				XKit.window.show("Safari Support Ended.","<b>Unfortunately, due to various reasons, XKit is no longer supported on Safari.</b><br/><br/>I'm terribly sorry about this. Please see <a href=\"http://xkit-extension.tumblr.com/post/84236134977/a-few-changes-for-the-summer\" target=\"_BLANK\">this post</a> to learn why it was discontinued and what you can do. The warning notification will not show up again after you click OK.", "warning", "<div class=\"xkit-button default\" id=\"xkit-close-message\">OK</div>");
@@ -271,7 +271,7 @@ XKit.extensions.xkit_preferences = new Object({
 			var n_time = new Date();
 			var n_ms = parseInt(n_time.getTime());
 
-			if (parseInt(lst_check) == 0 || isNaN(parseInt(lst_check)) === true) {
+			if (parseInt(lst_check) === 0 || isNaN(parseInt(lst_check))) {
 				check_for_update = true;
 			} else {
 				lst_check = parseInt(lst_check);
@@ -326,10 +326,12 @@ XKit.extensions.xkit_preferences = new Object({
 				// This is awful but at least it works.
 				var my_version = parseFloat(XKit.tools.replace_all(XKit.version, "\\.",""));
 
+        var mb_object, new_version;
+
 				if (XKit.browser().firefox === true && typeof XKit.extensions.xkit_preferences.news.return_browser_from_framework_data("firefox", mdata) !== "undefined") {
 
-					var mb_object = XKit.extensions.xkit_preferences.news.return_browser_from_framework_data("firefox", mdata);
-					var new_version = parseFloat(XKit.tools.replace_all(mb_object.version,"\\.",""));
+					mb_object = XKit.extensions.xkit_preferences.news.return_browser_from_framework_data("firefox", mdata);
+					new_version = parseFloat(XKit.tools.replace_all(mb_object.version,"\\.",""));
 
 					if (new_version > my_version) {
 						XKit.notifications.add("<b>Please update XKit!</b><br/>A new version of XKit is available for your browser. Please click here for more information and how you can easily and quickly update now.","warning",true, function() {
@@ -341,8 +343,8 @@ XKit.extensions.xkit_preferences = new Object({
 
 				if (XKit.browser().safari === true && typeof XKit.extensions.xkit_preferences.news.return_browser_from_framework_data("safari", mdata) !== "undefined") {
 
-					var mb_object = XKit.extensions.xkit_preferences.news.return_browser_from_framework_data("safari", mdata);
-					var new_version = parseFloat(XKit.tools.replace_all(mb_object.version,"\\.",""));
+					mb_object = XKit.extensions.xkit_preferences.news.return_browser_from_framework_data("safari", mdata);
+					new_version = parseFloat(XKit.tools.replace_all(mb_object.version,"\\.",""));
 					if (new_version > my_version) {
 						XKit.notifications.add("<b>Please update XKit!</b><br/>A new version of XKit is available for your browser. Please click here for more information and how you can easily and quickly update now.","warning",true, function() {
 							XKit.window.show("Please update XKit","<b>A new version of XKit, version " + mb_object.version + " is available.</b><br/>You are currently using XKit version " + XKit.version + ".<br/><br/>Please update to the latest version as soon as possible. If you don't, XKit might not work properly, or might not work at all in the future.<br/><br/>All you have to do is to go to the XKit download page, and re-download XKit. XKit will update itself, and all your settings will be preserved.", "warning","<a class=\"xkit-button default\" href=\"http://www.xkit.info/download/\">Go to Download page</a><div class=\"xkit-button\" id=\"xkit-close-message\">Not now, remind me later.</div>");
@@ -436,9 +438,9 @@ XKit.extensions.xkit_preferences = new Object({
 			}
 
 			if (typeof date === "undefined") {
-				var foo = new Date; // Generic JS date object
+				var foo = new Date(); // Generic JS date object
 				var unixtime_ms = foo.getTime(); // Returns milliseconds since the epoch
-				var date = parseInt(unixtime_ms / 1000);
+				date = parseInt(unixtime_ms / 1000);
 			}
 
 			var news_object = new Object();
@@ -613,8 +615,9 @@ XKit.extensions.xkit_preferences = new Object({
 			$("#xkit-control-panel").remove();
 		}
 
-		var festivus_text = festivus_on = "Festivus person?";
+		var festivus_on = "Festivus person?";
 		var festivus_off = "Presents!";
+    var festivus_text = festivus_on;
 
 		var festivus_display = "block";
 
@@ -705,7 +708,7 @@ XKit.extensions.xkit_preferences = new Object({
 			XKit.extensions.xkit_preferences.close();
 		});
 
-		if (XKit.extensions.xkit_preferences.bubble_tour_mode == true) {
+		if (XKit.extensions.xkit_preferences.bubble_tour_mode) {
 
 			XKit.extensions.xkit_preferences.bubble_tour_mode = false;
 			$("#xkit-welcoming-bubble").remove();
@@ -819,7 +822,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 		$("#xkit-control-panel-inner").html(m_html);
 
-		var m_html = XKit.extensions.xkit_preferences.news.list();
+		m_html = XKit.extensions.xkit_preferences.news.list();
 		if (m_html === "") {
 			$("#xkit-extensions-panel-left-inner").html("<div class=\"xkit-not-found-error\"><b>You have no mail.</b><br/>Once something exciting happens, you'll get news about it on this panel.</div>");
 			return;
@@ -882,7 +885,7 @@ XKit.extensions.xkit_preferences = new Object({
 			$("#xkit-extensions-panel-right").nanoScroller();
 			$("#xkit-extensions-panel-right").nanoScroller({ scroll: 'top' });
 
-			if ($("#xkit-extensions-panel-right-inner .xkit-gallery-extension").length == 0) {
+			if (!$("#xkit-extensions-panel-right-inner .xkit-gallery-extension").length) {
 
 				$("#xkit-extensions-panel-right-inner").html("<div class=\"xkit-unable-to-load-extension-gallery\"><b>No new extensions</b><br/><br/>It looks like you've installed all the currently available extensions.<br/>Come back later!</div>");
 				return;
@@ -913,7 +916,7 @@ XKit.extensions.xkit_preferences = new Object({
 				});
 
 				if (found_count === 0) {
-					if ($("#xkit-extensions-panel-right-inner .xkit-gallery-not-found-error").length == 0) {
+					if (!$("#xkit-extensions-panel-right-inner .xkit-gallery-not-found-error").length) {
 						var m_html = "<div class=\"xkit-gallery-not-found-error\">No extensions found.</div>";
 						$("#xkit-extensions-panel-right-inner").append(m_html);
 					}
@@ -943,7 +946,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 					var m_extension_id = mdata.id;
 
-					if (mdata.errors == true || mdata.script == "") {
+					if (mdata.errors || !mdata.script) {
 						if (mdata.storage_error === true) {
 							show_error_installation("[Code: 631] Can't store data on browser");
 							return;
@@ -964,6 +967,7 @@ XKit.extensions.xkit_preferences = new Object({
 					$("#xkit-gallery-extension-" + mdata.id).find(".overlay").html("installed!");
 
 					try {
+            /* jshint evil: true */
 						eval(mdata.script);
 						XKit.extensions[m_extension_id].run();
 					} catch(e) {
@@ -1058,7 +1062,7 @@ XKit.extensions.xkit_preferences = new Object({
 			});
 
 			if (found_count === 0) {
-				if ($("#xkit-extensions-panel-left-inner .xkit-not-found-error").length == 0) {
+				if (!$("#xkit-extensions-panel-left-inner .xkit-not-found-error").length) {
 					var m_html = "<div class=\"xkit-not-found-error\">No extensions found.</div>";
 					$("#xkit-extensions-panel-left-inner").prepend(m_html);
 				}
@@ -1115,8 +1119,8 @@ XKit.extensions.xkit_preferences = new Object({
 			var is_internal = installed[i].substring(0,5) === "xkit_";
 
 			var extension_icon;
-			if (m_extension.icon == "") {
-				if (is_internal === true) {
+			if (!m_extension.icon) {
+				if (is_internal) {
 					extension_icon = XKit.extensions.xkit_preferences.kernel_extension_icon;
 				} else {
 					extension_icon = XKit.extensions.xkit_preferences.default_extension_icon;
@@ -1126,7 +1130,7 @@ XKit.extensions.xkit_preferences = new Object({
 			}
 
 			var extension_title = m_extension.title;
-			if (extension_title = "") {
+			if (!extension_title) {
 				extension_title = m_extension.id;
 			}
 
@@ -1238,17 +1242,17 @@ XKit.extensions.xkit_preferences = new Object({
 					"<div class=\"more-info\" style=\"display: none;\" id=\"xkit-extension-more-info\">attributes</div>" +
 					"<div class=\"description\">" + m_extension.description;
 
-		if (m_extension.pack == true) {
+		if (m_extension.pack) {
 			m_html = m_html + "<div class=\"developer\" style=\"display: block\">by " + m_extension.developer + "</div>";
 		}
 
 		var third_party_extension = false;
-		if (m_extension.developer.toLowerCase() !== "studioxenix" && this_is_language !== true && m_extension.pack != true) {
+		if (m_extension.developer.toLowerCase() !== "studioxenix" && !this_is_language&& !m_extension.pack) {
 			third_party_extension = true;
 			m_html = m_html + "<div class=\"xkit-third-party-warning\">third party extension</div>";
 		}
 
-		if (m_extension.pack == true) {
+		if (m_extension.pack) {
 
 			m_html = m_html + "<div class=\"xkit-pack-warning\">&nbsp;</div>";
 
@@ -1260,12 +1264,12 @@ XKit.extensions.xkit_preferences = new Object({
 
 		m_html = m_html + "</div><div class=\"buttons\">";
 
-		if (m_extension.pack == true) {
+		if (m_extension.pack) {
 
 			m_html = m_html + "<div class=\"xkit-button is-xkit-pack\" id=\"xkit-extension-update\">" + XKit.lang.get("xkit_preferences.extension.update") + "</div>";
 			m_html = m_html + "<div class=\"xkit-button\" id=\"xkit-extension-uninstall\" style=\"border-radius: 0px 3px 3px 0px; margin-right: 6px;\">" + XKit.lang.get("xkit_preferences.extension.uninstall") + "</div>";
 
-			if (typeof m_extension.support_blog == "undefined" ||m_extension.support_blog == "") {
+			if (!m_extension.support_blog) {
 				m_html = m_html + "<div class=\"xkit-button disabled\" id=\"xkit-extension-support-blog\">Support Blog</div>";
 			} else {
 				m_html = m_html + "<a href=\"http://" + m_extension.support_blog + ".tumblr.com\" target=\"_BLANK\" class=\"xkit-button\" id=\"xkit-extension-support-blog\">Support Blog</a>";
@@ -1277,7 +1281,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 		}
 
-		if (this_is_internal === false &&this_is_language === false && m_extension.pack != true) {
+		if (!this_is_internal && !this_is_language && !m_extension.pack) {
 			m_html = m_html + "<div class=\"xkit-button\" id=\"xkit-extension-uninstall\">" + XKit.lang.get("xkit_preferences.extension.uninstall") + "</div>";
 			m_html = m_html + "<div class=\"xkit-button\" id=\"xkit-extension-reset\">" + XKit.lang.get("xkit_preferences.extension.reset_settings") + "</div>";
 		}
@@ -1639,6 +1643,7 @@ XKit.extensions.xkit_preferences = new Object({
 		try {
 
 		var last_one = "";
+    var m_extra_classes, extra_classes, pref_title;
 
 		for(var pref in XKit.extensions[extension_id].preferences) {
 
@@ -1646,7 +1651,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 				var m_blogs = XKit.tools.get_blogs();
 
-				var m_extra_classes = "";
+				m_extra_classes = "";
 				if (XKit.extensions[extension_id].preferences[pref].experimental === true || XKit.extensions[extension_id].preferences[pref].slow === true) {
 					m_extra_classes = "xkit-experimental-option";
 				}
@@ -1669,7 +1674,7 @@ XKit.extensions.xkit_preferences = new Object({
 					}
 				}
 
-				var pref_title = XKit.extensions[extension_id].preferences[pref].text;
+				pref_title = XKit.extensions[extension_id].preferences[pref].text;
 				if (XKit.lang.get([extension_id] + ".preferences." + pref) !== "???") {
 
 					pref_title = XKit.lang.get([extension_id] + ".preferences." + pref);
@@ -1695,7 +1700,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 					if (m_blogs[i] === "") { continue; }
 
-					var extra_classes = "";
+					extra_classes = "";
 
 					if (m_blogs[i] === XKit.extensions[extension_id].preferences[pref].value) {
 						extra_classes = "selected=\"true\"";
@@ -1712,7 +1717,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 			if (XKit.extensions[extension_id].preferences[pref].type === "combo") {
 
-				var m_extra_classes = "";
+				m_extra_classes = "";
 				if (XKit.extensions[extension_id].preferences[pref].experimental === true || XKit.extensions[extension_id].preferences[pref].slow === true) {
 					m_extra_classes = "xkit-experimental-option";
 				}
@@ -1735,7 +1740,7 @@ XKit.extensions.xkit_preferences = new Object({
 					}
 				}
 
-				var pref_title = XKit.extensions[extension_id].preferences[pref].text;
+				pref_title = XKit.extensions[extension_id].preferences[pref].text;
 				if (XKit.lang.get([extension_id] + ".preferences." + pref) !== "???") {
 
 					pref_title = XKit.lang.get([extension_id] + ".preferences." + pref);
@@ -1753,7 +1758,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 				for (var i=0;i<XKit.extensions[extension_id].preferences[pref].values.length;i++) {
 
-					var extra_classes = "";
+					extra_classes = "";
 
 					if (XKit.extensions[extension_id].preferences[pref].values[i + 1] === XKit.extensions[extension_id].preferences[pref].value) {
 						extra_classes = "selected=\"true\"";
@@ -1772,7 +1777,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 			if (XKit.extensions[extension_id].preferences[pref].type === "text") {
 
-				var m_extra_classes = "";
+				m_extra_classes = "";
 				if (XKit.extensions[extension_id].preferences[pref].experimental === true || XKit.extensions[extension_id].preferences[pref].slow === true) {
 					m_extra_classes = "xkit-experimental-option";
 				}
@@ -1795,7 +1800,7 @@ XKit.extensions.xkit_preferences = new Object({
 					}
 				}
 
-				var pref_title = XKit.extensions[extension_id].preferences[pref].text;
+				pref_title = XKit.extensions[extension_id].preferences[pref].text;
 				if (XKit.lang.get([extension_id] + ".preferences." + pref) !== "???") {
 
 					pref_title = XKit.lang.get([extension_id] + ".preferences." + pref);
@@ -1818,7 +1823,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 			if (XKit.extensions[extension_id].preferences[pref].type === "separator") {
 
-				var pref_title = XKit.extensions[extension_id].preferences[pref].text;
+				pref_title = XKit.extensions[extension_id].preferences[pref].text;
 				if (XKit.lang.get([extension_id] + ".preferences." + pref) !== "???") {
 
 					pref_title = XKit.lang.get([extension_id] + ".preferences." + pref);
@@ -1832,7 +1837,7 @@ XKit.extensions.xkit_preferences = new Object({
 
 			if (typeof XKit.extensions[extension_id].preferences[pref].type === "undefined" ||  XKit.extensions[extension_id].preferences[pref].type === "" || XKit.extensions[extension_id].preferences[pref].type === "checkbox") {
 
-				var m_extra_classes = "";
+				m_extra_classes = "";
 				if (XKit.extensions[extension_id].preferences[pref].experimental === true || XKit.extensions[extension_id].preferences[pref].slow === true) {
 					m_extra_classes = "xkit-experimental-option";
 				}
@@ -1851,7 +1856,7 @@ XKit.extensions.xkit_preferences = new Object({
 					}
 				}
 
-				var pref_title = XKit.extensions[extension_id].preferences[pref].text;
+				pref_title = XKit.extensions[extension_id].preferences[pref].text;
 				if (XKit.lang.get([extension_id] + ".preferences." + pref) !== "???") {
 
 					pref_title = XKit.lang.get([extension_id] + ".preferences." + pref);

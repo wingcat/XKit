@@ -156,11 +156,11 @@ XKit.extensions.xwidgets = new Object({
 					var jan = new Date(this.getFullYear(), 0, 1);
 					var jul = new Date(this.getFullYear(), 6, 1);
 					return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-				}
+				};
 
 				Date.prototype.dst = function() {
     					return this.getTimezoneOffset() < this.stdTimezoneOffset();
-				}
+				};
 
 				$(obj).addClass("world_clock");
 
@@ -279,7 +279,7 @@ XKit.extensions.xwidgets = new Object({
   						m_caption = "Pacific Time";
   						break;
 					default:
-  						m_caption = "GMT " + m_storage
+  						m_caption = "GMT " + m_storage;
 				}
 
 				$(obj).find(".timezone").html(m_caption);
@@ -317,9 +317,9 @@ XKit.extensions.xwidgets = new Object({
 				statusampm = ampm;
 
 				hr2 = hr;
-				if (hr2 == 0) hr2=12;
-				(hr2 < 13)?hr2:hr2 %= 12;
-				if (hr2<10) hr2="0"+hr2
+				if (hr2 === 0) hr2 = 12;
+				if (hr2 > 12) hr2 %= 12;
+				if (hr2<10) hr2="0"+hr2;
 
 				var finaltime=hr2+':'+((mins < 10)?"0"+mins:mins)+':'+((secs < 10)?"0"+secs:secs)+' '+statusampm;
 
@@ -349,11 +349,11 @@ XKit.extensions.xwidgets = new Object({
 					var jan = new Date(this.getFullYear(), 0, 1);
 					var jul = new Date(this.getFullYear(), 6, 1);
 					return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-				}
+				};
 
 				Date.prototype.dst = function() {
     					return this.getTimezoneOffset() < this.stdTimezoneOffset();
-				}
+				};
 
 				$(obj).addClass("world_clock");
 
@@ -472,7 +472,7 @@ XKit.extensions.xwidgets = new Object({
   						m_caption = "Pacific Time";
   						break;
 					default:
-  						m_caption = "GMT " + m_storage
+  						m_caption = "GMT " + m_storage;
 				}
 
 				$(obj).find(".timezone").html(m_caption);
@@ -514,9 +514,9 @@ XKit.extensions.xwidgets = new Object({
 				}
 
 				hr2 = hr;
-				if (hr2 == 0) hr2=24;
+				if (hr2 === 0) hr2=24;
 				//(hr2 < 13)?hr2:hr2 %= 12;
-				if (hr2<10) hr2="0"+hr2
+				if (hr2<10) hr2="0"+hr2;
 
 
 
@@ -631,15 +631,15 @@ XKit.extensions.xwidgets = new Object({
 							var queue_count = $(".queue .count", data).html();
 							var drafts_count = $(".drafts .count", data).html();
 
-							if ($(".followers .count", data).length == 0) {
+							if ($(".followers .count", data).length === 0) {
 								follower_count = "0";
 							}
 
-							if ($(".queue .count", data).length == 0) {
+							if ($(".queue .count", data).length === 0) {
 								queue_count = "0";
 							}
 
-							if ($(".drafts .count", data).length == 0) {
+							if ($(".drafts .count", data).length === 0) {
 								drafts_count = "0";
 							}
 

@@ -62,7 +62,7 @@ XKit.extensions.xkit_pack_launcher = new Object({
 								display_version = display_version.substring(0,19) + "..";
 							}
 
-							if (mdata.malicious == true || mdata.malicious == "true") {
+							if (mdata.malicious || mdata.malicious == "true") {
 
 								XKit.window.show("Malicious extension","XKit prevented the installation of this extension since it is a known malicious extension.","error","<div id=\"xkit-close-message\" class=\"xkit-button default\">OK</div>");
 								return;

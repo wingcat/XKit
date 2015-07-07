@@ -78,7 +78,7 @@ XKit.extensions.xkit_updates = new Object({
 
 				try {
 
-					if (ext_object.pack == true) {
+					if (ext_object.pack) {
 
 						XKit.extensions.xkit_updates.pack_to_update.push(ext_object);
 
@@ -119,7 +119,7 @@ XKit.extensions.xkit_updates = new Object({
 
 		XKit.extensions.xkit_updates.update_pack(to_update.id, function(data) {
 
-			if (data.errors == true) {
+			if (data.errors) {
 				console.log("Can't update the pack " + to_update.id + "..");
 			} else {
 				console.log("Successfully updated the pack " + to_update.id + "..");
@@ -140,7 +140,7 @@ XKit.extensions.xkit_updates = new Object({
 
 		XKit.download.page("list.php", function(mdata) {
 
-			if (mdata.server_down === true) {
+			if (mdata.server_down) {
 
 				XKit.extensions.xkit_updates.show_update_failure();
 				return;
@@ -292,7 +292,7 @@ XKit.extensions.xkit_updates = new Object({
 				try {
 					var mdata = JSON.parse(response.responseText);
 
-					if (mdata.malicious == true || mdata.malicious == "true") {
+					if (mdata.malicious || mdata.malicious == "true") {
 
 						XKit.installed.remove(mdata.id);
 						XKit.notifications.add("<b>Removed malicious extension " + mdata.title + "</b>. Please click here for more information.","warning",true, function() {
@@ -424,7 +424,7 @@ XKit.extensions.xkit_updates = new Object({
 
 		XKit.install(extension_id, function(mdata) {
 
-			if (mdata.errors == true || mdata.script == "") {
+			if (mdata.errors || !mdata.script) {
 				if (mdata.storage_error === true) {
 					m_result.errors = true;
 					m_result.error = "Can't store data on browser";
