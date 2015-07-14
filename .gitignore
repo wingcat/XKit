@@ -6,4 +6,3 @@ build
 node_modules/
 
 Firefox/data/xkit/
-Extensions/dist/*.json
