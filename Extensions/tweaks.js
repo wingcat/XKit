@@ -1,5 +1,5 @@
 //* TITLE Tweaks **//
-//* VERSION 3.2.1 **//
+//* VERSION 3.2.2 **//
 //* DESCRIPTION Various little tweaks for your dashboard. **//
 //* DEVELOPER STUDIOXENIX **//
 //* DETAILS These are small little tweaks that allows you customize your dashboard. If you have used XKit 6, you will notice that some of the extensions have been moved here as options you can toggle. Keep in mind that some of the tweaks (the ones marked with a '*') can slow down your computer. **//
@@ -339,7 +339,7 @@ XKit.extensions.tweaks = new Object({
 
 
 		if (XKit.extensions.tweaks.preferences.hide_customize.value === true) {
-			$("#dashboard_controls_open_blog").find(".customize").parent().css("display","none");
+			$("#right_column").find(".customize").parent().css("display","none");
 		}
 
 		if (XKit.extensions.tweaks.preferences.hide_activity.value === true) {
@@ -492,7 +492,8 @@ XKit.extensions.tweaks = new Object({
 				moz_fix = " top: -5px !important; ";
 			}
 			var m_css = "li.section_header { height: 22px !important; line-height: 20px !important; font-size: 11px !important; } .activity canvas { zoom: 0.6; -moz-transform: scale(0.6); } .controls_section li { height: 25px; line-height: 19px; } .controls_section li a, .controls_section li .hide_overflow { line-height: 23px; font-size: 12px; } .controls_section li a { padding: 3px 13px 10px 40px; font-size: 13px; } .controls_section li>a:after { zoom: 0.80; -moz-transform: scale(0.77); left: 14px; top: -2px; " + moz_fix + " } .controls_section a .count { top: 3px !important; } .controls_section .sub_control.link_arrow { margin-top: -6px; } #popover_button_blogs { height: auto; } #fan_mail_controls, #fan_mail_controls li, #recommended_tumblelogs li, #tag_editors li, #tag_contributors li { height: auto; } .controls_section a .count { line-height: 19px; } .controls_section li .icon_left { top: 2px !important; position: absolute; left: 12px !important; font-size: 18px !important; line-height: 21px !important; }" +
-				".controls_section.follow_list.recommended_tumblelogs>li, .controls_section.follow_list>li { height: auto !important; }";
+				".controls_section.follow_list.recommended_tumblelogs>li, .controls_section.follow_list>li { height: auto !important; } .controls_section li a, .controls_section li .hide_overflow {line-height: 20px !important;}" +
+				".controls_section li a {padding: 0 0 0 0; } .xtag .result_title {padding: 1px 0px 8px 40px !important; } .result_sub_title {padding: 1px 0px !important; } .controls_section a .count {top: 0px !important; } .identity .controls_section a .count {right: 15px; } .icon_plus.follow_icon { font-size: 24px; }";
 			if (!$("body").hasClass("settings_actions_tumblelog")) {
 				XKit.extensions.tweaks.add_css(m_css, "xkit_tweaks_slim_sidebar");
 			}
@@ -566,36 +567,17 @@ XKit.extensions.tweaks = new Object({
 		}
 
 		if (XKit.extensions.tweaks.preferences.show_customize.value === true) {
-			var user_url = "";
-			if (document.location.href.indexOf('/blog') !== -1) {
-				user_url = document.location.href.substring(document.location.href.indexOf('/blog/') + 6);
-			} else {
-				if ($("#open_blog_link").length > 0) {
-					user_url = $("#open_blog_link").html().replace(".tumblr.com","");
-				} else {
-					XKit.tools.add_css(XKit.extensions.tweaks.css_to_add, "xkit_tweaks"); return;
-				}
-			}
-			if (typeof user_url === "undefined") { XKit.tools.add_css(XKit.extensions.tweaks.css_to_add, "xkit_tweaks"); return; }
-			user_url = user_url.replace("#","");
+			var user_url = XKit.tools.get_current_blog();
 
-			if (user_url.indexOf("/") !== -1) {
-				user_url = user_url.substring(0, user_url.indexOf("/"));
+			if (typeof user_url === "undefined") {
+				XKit.tools.add_css(XKit.extensions.tweaks.css_to_add, "xkit_tweaks");
+				return;
 			}
 
 			// Patch for custom domains.
 			if ($("#popover_blogs > .popover_inner").length > 0) {
 				user_url = $("#popover_blogs > .popover_inner").children(".item:first-child").attr('id').substring(9);
 			}
-
-			/*m_html = '<li class="no_push" id="xkit_customize_button">' +
-				 '<a href="/customize/' + user_url + '" class="customize">' +
-				 '<div class="hide_overflow">Customize</div>' +
-				 '</a></li>';*/
-
-			m_html = "";
-
-			$("#dashboard_controls_open_blog").append(m_html);
 
 			var add_mega_link = true;
 			if ($(".small_links").length > 0) {
@@ -610,31 +592,26 @@ XKit.extensions.tweaks = new Object({
 				} catch(e) {
 					// Meh.
 				}
-			} else {
-				add_mega_link = true;
 			}
 
-			//if (add_mega_link) {
+			var x_html = '<a class=\"xkit-small-blog-setting-link\" href="/blog/' + user_url.replace("/","") + '/settings/" target="_blog_settings">Blog Settings</a>';
+			if (add_mega_link) {
 				x_html = '<div class="small_links by-xkit">' +
-           					'<a href="/mega-editor/' + user_url + '" target="_mass_post_editor">Mass Post Editor</a>' +
-           					'<a href="/blog/' + user_url.replace("/","") + '/settings/" target="_mass_post_editor">Blog Settings</a>' +
-					'</div>';
-					
-			//}
-
-            var xf_html = "";
-
-			if ($("#dashboard_controls_open_blog").length >= 1) {
-				if ($(".small_links").length > 0 && add_mega_link === false) {
-					$(".small_links:first").append('<a class=\"xkit-small-blog-setting-link\" href="/blog/' + user_url.replace("/","") + '/settings/" target="_blog_settings">Blog Settings</a>');
-				} else {
-					$("#dashboard_controls_open_blog").after(x_html);
-				}
-
-			} else {
-			    $("#right_column").prepend(x_html);
+											'<a href="/mega-editor/' + user_url + '" target="_mass_post_editor">Mass Post Editor</a>' +
+											'<a href="/blog/' + user_url.replace("/","") + '/settings/" target="_mass_post_editor">Blog Settings</a>' +
+						'</div>';
 			}
-
+			if ($(".small_links").length > 0 && !add_mega_link) {
+				$(".small_links:first").append(x_html);
+			} else {
+				if ($("#dashboard_controls_open_blog").length > 0) {
+					// If using Old Stats, append there
+					$("#dashboard_controls_open_blog").after(x_html);
+				} else {
+					// Otherwise just tack it onto the end of the right column's controls
+					$(".controls_section:last").after(x_html);
+				}
+			}
 		}
 
 		XKit.tools.add_css(XKit.extensions.tweaks.css_to_add, "xkit_tweaks");
