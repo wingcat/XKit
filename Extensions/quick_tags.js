@@ -1,5 +1,5 @@
 //* TITLE Quick Tags **//
-//* VERSION 0.5.2 **//
+//* VERSION 0.5.3 **//
 //* DESCRIPTION Quickly add tags to posts **//
 //* DETAILS Allows you to create tag bundles and add tags to posts without leaving the dashboard. **//
 //* DEVELOPER STUDIOXENIX **//
@@ -166,7 +166,9 @@ XKit.extensions.quick_tags = new Object({
 		} else {
 			XKit.window.show("Unable to edit post","Something went wrong, my apologies.<br/>Please try again later or file a bug report with the error code:<br/>QT02","error","<div id=\"xkit-close-message\" class=\"xkit-button default\">OK</div>");
 		}
-
+		
+		XKit.extensions.quick_tags.user_on_box = false;
+		XKit.extensions.quick_tags.close_window();
 	},
 
 	custom_tag: function() {
@@ -556,7 +558,7 @@ XKit.extensions.quick_tags = new Object({
 
 			var m_tags = XKit.extensions.quick_tags.tag_array[m_id].tags;
 			var m_title = XKit.extensions.quick_tags.tag_array[m_id].title;
-			XKit.window.show("Edit bundle","<b>Bundle Title</b><input type=\"text\" maxlength=\"40\" value=\"" + m_title + "\" placeholder=\"eg: Doctor Who\" class=\"xkit-textbox\" id=\"xkit-quick-tags-add-title\"><b>Bundled Tags, comma separated</b><input value=\"" + m_tags + "\" type=\"text\" maxlength=\"250\" placeholder=\"eg: Doctor Who, Dr. Who, Non-Medical Tv Show Doctor\" class=\"xkit-textbox\" id=\"xkit-quick-tags-add-tags\">","question","<div class=\"xkit-button default\" id=\"xkit-quick-tags-create-bundle\">Create Bundle</div><div class=\"xkit-button\" id=\"xkit-quick-tags-delete-bundle\">Delete This Bundle</div><div class=\"xkit-button\" id=\"xkit-close-message\">Cancel</div>");
+			XKit.window.show("Edit bundle","<b>Bundle Title</b><input type=\"text\" maxlength=\"40\" value=\"" + m_title + "\" placeholder=\"eg: Doctor Who\" class=\"xkit-textbox\" id=\"xkit-quick-tags-add-title\"><b>Bundled Tags, comma separated</b><input value=\"" + m_tags + "\" type=\"text\" maxlength=\"250\" placeholder=\"eg: Doctor Who, Dr. Who, Non-Medical Tv Show Doctor\" class=\"xkit-textbox\" id=\"xkit-quick-tags-add-tags\">","question","<div class=\"xkit-button default\" id=\"xkit-quick-tags-create-bundle\">Save Bundle</div><div class=\"xkit-button\" id=\"xkit-quick-tags-delete-bundle\">Delete This Bundle</div><div class=\"xkit-button\" id=\"xkit-close-message\">Cancel</div>");
 
 			$("#xkit-quick-tags-delete-bundle").click(function() {
 
