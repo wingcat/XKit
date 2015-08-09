@@ -1,5 +1,5 @@
 //* TITLE Read More Now **//
-//* VERSION 1.4.5 **//
+//* VERSION 1.5.0 **//
 //* DESCRIPTION Read Mores in your dash **//
 //* DETAILS This extension allows you to read 'Read More' posts without leaving your dash. Just click on the 'Read More Now!' button on posts and XKit will automatically load and display the post on your dashboard. **//
 //* DEVELOPER STUDIOXENIX **//
@@ -79,11 +79,25 @@ XKit.extensions.read_more_now = new Object({
 					}
 
 					var post_cont = $(m_cont).parent().parent();
+					var had_other_buttons = post_cont.find(".xkit-read-more-now").length > 1;
+
 					if (post_cont.find(".post_title").length > 0) {
 						var post_title = post_cont.find(".post_title")[0].outerHTML;
 						post_cont.html(XKit.extensions.read_more_now.strip_scripts(post_title + m_contents));
 					} else {
 						post_cont.html(XKit.extensions.read_more_now.strip_scripts(m_contents));
+					}
+
+					var adds_button = XKit.extensions.read_more_now.process_keep_reading(post_cont);
+
+					// If there was not another button but the new content has
+					// a newly added button, this new button corresponds to a
+					// Keep reading link that used to be expanded, therefore we
+					// should expand it.
+					if (!had_other_buttons && adds_button) {
+						setTimeout(function() {
+							post_cont.find(".xkit-read-more-now").click();
+						}, 0);
 					}
 
 					if (XKit.interface.where().search) {
@@ -140,41 +154,7 @@ XKit.extensions.read_more_now = new Object({
 				return;
 			}
 
-			if (XKit.extensions.read_more_now.preferences.process_keep_reading.value) {
-				post.find("a").each(function() {
-					var a = $(this);
-					var link_text = a.text().trim();
-					if ((link_text !== "Keep reading")
-                                           && (link_text !== "Weiterlesen")        //German
-                                           && (link_text !== "Afficher davantage") //French
-                                           && (link_text !== "Continua a leggere") //Italian
-                                           && (link_text !== "さらに読む")         //Japanese
-                                           && (link_text !== "Okumaya devam et")   //Turkish
-                                           && (link_text !== "Seguir leyendo")     //Spanish
-                                           && (link_text !== "Читать дальше")      //Russian
-                                           && (link_text !== "Czytaj dalej")       //Polish
-                                           && (link_text !== "Continuar a ler")    //Portuguese (Portugal)
-                                           && (link_text !== "Continuar lendo")    //Portuguese (Brazil)
-                                           && (link_text !== "Lees verder")        //Dutch
-                                           && (link_text !== "더 보기")  //Korean
-                                           && (link_text !== "继续阅读") //Simplified Chinese
-                                           && (link_text !== "繼續閱讀") /*Traditional Chinese (Hong Kong & Taiwan)*/) {
-						return;
-					}
-					need_reflow = true;
-
-					if (/https?:\/\/[^.]+\.tumblr\.com\/post\/\d+/.test(a.attr("href"))) {
-						XKit.extensions.read_more_now.append_button_with_link(a.parent(), a.attr("href"));
-					} else {
-						// If url is not of the form
-						// http://something.tumblr.com/post/numbers/whatever it needs to be
-						// determined based on the post's author
-						var real_prefix = 'https://' + post.attr('data-tumblelog-name') + '.tumblr.com/';
-						var real_link = a.attr('href').replace(/https?:\/\/[^\/]+\//, real_prefix);
-						XKit.extensions.read_more_now.append_button_with_link(a.parent(), real_link);
-					}
-				});
-			}
+			need_reflow = XKit.extensions.read_more_now.process_keep_reading(post) || need_reflow;
 		});
 		if (need_reflow) {
 			XKit.interface.trigger_reflow();
@@ -183,6 +163,53 @@ XKit.extensions.read_more_now = new Object({
 
 	handle_read_more_post: function(post) {
 		XKit.extensions.read_more_now.append_button_with_link(post, post.find(".read_more").attr("href"));
+	},
+
+	/**
+	 * Attempt to attach Read More Now buttons to the post container `post`
+	 * @param {Element} post
+	 * @return {Boolean} if any buttons have been added
+	 */
+	process_keep_reading: function(post) {
+		if (!XKit.extensions.read_more_now.preferences.process_keep_reading.value) {
+			return false;
+		}
+
+		var processed_any = false;
+		post.find("a").each(function() {
+			var a = $(this);
+			var link_text = a.text().trim();
+			if ((link_text !== "Keep reading")
+			 && (link_text !== "Weiterlesen")        //German
+			 && (link_text !== "Afficher davantage") //French
+			 && (link_text !== "Continua a leggere") //Italian
+			 && (link_text !== "さらに読む")         //Japanese
+			 && (link_text !== "Okumaya devam et")   //Turkish
+			 && (link_text !== "Seguir leyendo")     //Spanish
+			 && (link_text !== "Читать дальше")      //Russian
+			 && (link_text !== "Czytaj dalej")       //Polish
+			 && (link_text !== "Continuar a ler")    //Portuguese (Portugal)
+			 && (link_text !== "Continuar lendo")    //Portuguese (Brazil)
+			 && (link_text !== "Lees verder")        //Dutch
+			 && (link_text !== "더 보기")  //Korean
+			 && (link_text !== "继续阅读") //Simplified Chinese
+			 && (link_text !== "繼續閱讀") /*Traditional Chinese (Hong Kong & Taiwan)*/) {
+				return;
+			}
+			processed_any = true;
+
+			if (/https?:\/\/[^.]+\.tumblr\.com\/post\/\d+/.test(a.attr("href"))) {
+				XKit.extensions.read_more_now.append_button_with_link(a.parent(), a.attr("href"));
+			} else {
+				// If url is not of the form
+				// http://something.tumblr.com/post/numbers/whatever it needs to be
+				// determined based on the post's author
+				var real_prefix = 'https://' + post.attr('data-tumblelog-name') + '.tumblr.com/';
+				var real_link = a.attr('href').replace(/https?:\/\/[^\/]+\//, real_prefix);
+				XKit.extensions.read_more_now.append_button_with_link(a.parent(), real_link);
+			}
+		});
+		return processed_any;
 	},
 
 	append_button_with_link: function(post, url) {
