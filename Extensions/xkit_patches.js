@@ -1,5 +1,5 @@
 //* TITLE XKit Patches **//
-//* VERSION 3.1.11 **//
+//* VERSION 3.1.12 **//
 //* DESCRIPTION Patches framework **//
 //* DEVELOPER STUDIOXENIX **//
 
@@ -2046,6 +2046,10 @@ XKit.tools.dump_config = function(){
 				if ($("body").hasClass("dashboard_posts_likes") ||
 						document.location.href.indexOf("tumblr.com/likes/") !== -1) {
 					m_return.likes = true;
+				}
+
+				if ($('meta[name="twitter:title"]').length) {
+					m_return.user_url = $('meta[name="twitter:title"]').attr("content");
 				}
 
 				m_return.dashboard = $("body").hasClass("is_dashboard") === true;
