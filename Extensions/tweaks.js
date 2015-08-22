@@ -1,5 +1,5 @@
 //* TITLE Tweaks **//
-//* VERSION 3.4.3 **//
+//* VERSION 3.4.4 **//
 //* DESCRIPTION Various little tweaks for your dashboard. **//
 //* DEVELOPER STUDIOXENIX **//
 //* DETAILS These are small little tweaks that allows you customize your dashboard. If you have used XKit 6, you will notice that some of the extensions have been moved here as options you can toggle. Keep in mind that some of the tweaks (the ones marked with a '*') can slow down your computer. **//
@@ -428,7 +428,7 @@ XKit.extensions.tweaks = new Object({
 		}
 
 		if (XKit.extensions.tweaks.preferences.hide_recommended.value) {
-			$("#recommended_tumblelogs, .recommended_tumblelogs, .trending_tumblelogs").css("display","none");
+			$("#recommended_tumblelogs, .recommended_tumblelogs, .trending_tumblelogs, .is_recommended").css("display","none");
 		}
 
 		if (XKit.extensions.tweaks.preferences.hide_share.value) {
@@ -487,7 +487,7 @@ XKit.extensions.tweaks = new Object({
 		}
 
 		if (XKit.extensions.tweaks.preferences.fix_blockquotes.value) {
-			XKit.extensions.tweaks.add_css("#posts .post_content blockquote { border-left: solid 3px #dcdcdc; padding-left: 8px; margin-left: 6px; }", "xkit_tweaks_fix_blockquotes");
+			XKit.extensions.tweaks.add_css("#posts .post_content blockquote { border-left: solid 2px #e7e7e7; padding-left: 8px; margin-left: 0px; }", "xkit_tweaks_fix_blockquotes");
 		}
 
 		if (XKit.extensions.tweaks.preferences.dont_show_liked_on_dashboard.value) {
@@ -748,7 +748,7 @@ XKit.extensions.tweaks = new Object({
 		$("#tumblr_radar").css("display","block");
 		$("#xkit_customize_button").remove();
 		$("a.spotlight").parent().css("display","block");
-		$("#recommended_tumblelogs, .recommended_tumblelogs, .trending_tumblelogs").css("display","block");
+		$("#recommended_tumblelogs, .recommended_tumblelogs, .trending_tumblelogs, .is_recommended").css("display","block");
 		$("a.activity").parent().css("display","block");
 		$(".radar_header").parent().css("display","block");
 		$(".customize").parent().css("display","block");
