@@ -1,6 +1,6 @@
 # XKit
 
-[![Build Status](https://travis-ci.org/new-xkit/XKit.svg?branch=master)](https://travis-ci.org/new-xkit/XKit) 
+[![Stories In Progress](https://badge.waffle.io/new-xkit/XKit.svg?label=in%20progress&title=In Progress)](http://waffle.io/new-xkit/XKit) [![Build Status](https://travis-ci.org/new-xkit/XKit.svg?branch=master)](https://travis-ci.org/new-xkit/XKit)
 
 XKit is a small extension framework that powers tweaks for Tumblr.
 
@@ -10,7 +10,7 @@ We support Opera unofficially using the same file as the Chrome extension, [whic
 
 ## Support [![Join the chat at https://gitter.im/new-xkit/support](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/new-xkit/support?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-First, [check the list of issues](https://github.com/new-xkit/XKit/issues), and see if there's something there that looks like the problem you're having. Otherwise, [file a new issue](https://github.com/new-xkit/XKit/issues) or come join [our support chat](https://gitter.im/new-xkit/support). We don't bite!
+First, [check the list of issues](https://github.com/new-xkit/XKit/issues), and see if there's something there that looks like the problem you're having. Otherwise, [file a new issue](https://github.com/new-xkit/XKit/issues) or come join our support chat; visit our [live support page](http://new-xkit-support.tumblr.com/support) or join our [Gitter chat](https://gitter.im/new-xkit/support) if you have a GitHub account. We don't bite!
 
 ## Contribute
 XKit needs all the help it can get! If you want to help out, the first step is
