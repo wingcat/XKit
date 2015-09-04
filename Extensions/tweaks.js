@@ -1,6 +1,6 @@
 
 //* TITLE Tweaks **//
-//* VERSION 4.0.3 **//
+//* VERSION 4.0.4 **//
 //* DESCRIPTION Various little tweaks for your dashboard. **//
 //* DEVELOPER STUDIOXENIX **//
 //* DETAILS These are small little tweaks that allows you customize your dashboard. If you have used XKit 6, you will notice that some of the extensions have been moved here as options you can toggle. Keep in mind that some of the tweaks (the ones marked with a '*') can slow down your computer. **//
@@ -395,7 +395,7 @@ XKit.extensions.tweaks = new Object({
 		}
 
 		if (XKit.extensions.tweaks.preferences.classic_post_titles.value) {
-			XKit.extensions.tweaks.add_css(".post-typography-update .post.is_conversation .post_content .post_title, .post-typography-update .post.is_regular .post_content .post_title, .post-typography-update .post .post-content .title-field * { font-family: \"Helvetica Neue\", Helvetica, sans-serif !important; font-size: 22px !important; font-weight: bold !important; line-height: normal !important; min-height: 25px !important; } .post_title { font-size: 22px !important; line-height: normal !important; font-weight: bold !important; font-family: \"Helvetica Neue\", Helvetica, sans-serif !important; }", "xkit_tweaks_classic_post_titles");
+			XKit.extensions.tweaks.add_css(".post-typography-update .post.is_conversation .post_content .post_title, .post-typography-update .post.is_regular .post_content .post_title, .post-typography-update .post .post-content .title-field *, .reblog-title { font-family: \"Helvetica Neue\", Helvetica, sans-serif !important; font-size: 22px !important; font-weight: bold !important; line-height: normal !important; min-height: 25px !important; } .post_title { font-size: 22px !important; line-height: normal !important; font-weight: bold !important; font-family: \"Helvetica Neue\", Helvetica, sans-serif !important; }", "xkit_tweaks_classic_post_titles");
 			XKit.extensions.tweaks.add_css(".post .post_content h2 { font-size: 15px !important; line-height: normal !important; font-weight: bold !important; font-family: \"Helvetica Neue\", Helvetica, sans-serif !important; }", "xkit_tweaks_classic_post_titles");
 		}
 
@@ -798,4 +798,3 @@ XKit.extensions.tweaks = new Object({
 	}
 
 });
-
