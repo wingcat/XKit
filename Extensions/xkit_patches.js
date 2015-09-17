@@ -1,5 +1,5 @@
 //* TITLE XKit Patches **//
-//* VERSION 5.1.0 **//
+//* VERSION 5.3.0 **//
 //* DESCRIPTION Patches framework **//
 //* DEVELOPER new-xkit **//
 
@@ -661,12 +661,20 @@ XKit.tools.dump_config = function(){
 				 * @param {String} new_content
 				 */
 				get_content_html: function() {
-					var content_editor = $('.post-form--form').find('.editor.editor-richtext');
-					if (content_editor.length === 0) {
-						XKit.console.add('ERROR: unable to set content html');
-						return '';
+					if ($(".html-field").css("display") === "none") {
+						var content_editor = $('.post-form--form').find('.editor.editor-richtext');
+						if (content_editor.length === 0) {
+							XKit.console.add('ERROR: unable to get content html');
+							return '';
+						}
+						return content_editor.html();
+					} else {
+						var html_or_markdown = $(".tab-label[data-js-srclabel]").text();
+						if (html_or_markdown === 'HTML') {
+							return $('.ace_editor .ace_text-layer').text();
+						}
+						throw "Invalid editor type.";
 					}
-					return content_editor.html();
 				},
 
 				/**
